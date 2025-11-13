@@ -1,0 +1,49 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: onlix-user
+    url: http://user-service:8080
+    # url: http://host.docker.internal:8081
+    routes:
+      - name: user-api
+        paths: ["/api/user"]
+        strip_path: false
+
+  - name: onlix-product
+    url: http://product-service:8080
+    # url: http://host.docker.internal:8082
+    routes:
+      - name: product-api
+        paths: ["/api/product"]
+        strip_path: false
+
+# dev에서는 프론트 로컬 오리진 허용
+plugins:
+  - name: cors
+    config:
+      origins:
+        - "http://localhost:3000"
+        - "http://127.0.0.1:3000"
+      methods: ["GET","POST","PUT","DELETE","OPTIONS"]
+      headers: ["Authorization","Content-Type"]
+      credentials: true
+      max_age: 3600
+
+#   - name: jwt
+#     config:
+#       run_on_preflight: false
+#       key_claim_name: "iss"
+#       claims_to_verify: ["exp","nbf"]
+#       header_names: ["authorization"]
+#       uri_param_names: ["jwt"]
+
+# consumers:
+#   - username: "onlix-issuer"
+#     jwt_secrets:
+#       - algorithm: "RS256"
+#         key: "https://auth.onlix.example/issuer"
+#         rsa_public_key: |
+#           -----BEGIN PUBLIC KEY-----
+#           # DEV/PROD 동일키면 여기 두고, 다르면 환경 파일에서 consumer를 덮어써도 됨
+#           -----END PUBLIC KEY-----
