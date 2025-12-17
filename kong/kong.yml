@@ -3,19 +3,17 @@ _transform: true
 
 services:
   - name: onlix-user
-    url: http://user-service:8080
-    # url: http://host.docker.internal:8081
+    url: http://user-service:8000
     routes:
       - name: user-api
         paths: ["/api/user"]
         strip_path: false
 
-  - name: onlix-product
-    url: http://product-service:8080
-    # url: http://host.docker.internal:8082
+  - name: onlix-catalog
+    url: http://catalog-service:8000
     routes:
-      - name: product-api
-        paths: ["/api/product"]
+      - name: catalog-api
+        paths: ["/api/catalog"]
         strip_path: false
 
 # dev에서는 프론트 로컬 오리진 허용
