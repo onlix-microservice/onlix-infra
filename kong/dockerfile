@@ -1,0 +1,5 @@
+FROM kong:3.7
+
+USER root
+COPY ./plugins/kong-jwt2header /usr/local/share/lua/5.1/kong/plugins/kong-jwt2header
+USER kong
